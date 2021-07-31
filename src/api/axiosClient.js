@@ -3,7 +3,7 @@ import queryString from "query-string";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const axiosClient = axios.create({
-  baseURL: "http://10.0.2.2:80/project/Authen-JWT/",
+  baseURL: "http://10.0.2.2:80/project/Asm-API/api/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -11,20 +11,8 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config) => {
-  const getToken = async () => {
-    try {
-      const accessToken = await AsyncStorage.getItem("access_token");
-
-      if (accessToken !== null) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
-
-  getToken();
-
+  const accessToken = await AsyncStorage.getItem("access_token");
+  config.headers.Authorization = `Bearer ${accessToken}`;
   return config;
 });
 

@@ -267,7 +267,7 @@ const SignUpScreen = ({ navigation }) => {
                     color: "#000",
                   },
                 ]}>
-                Sign Up
+                Đăng ký
               </Text>
             </LinearGradient>
           </TouchableOpacity>

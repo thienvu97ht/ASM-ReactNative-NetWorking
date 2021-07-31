@@ -2,22 +2,22 @@ import axiosClient from "./axiosClient";
 
 const authenApi = {
   checkLogin: (data) => {
-    const url = `/login.php`;
+    const url = `auth/login.php`;
     return axiosClient.post(url, data);
   },
 
   register: (data) => {
-    const url = `/register.php`;
+    const url = `auth/register.php`;
     return axiosClient.post(url, data);
   },
 
   forgotPassword: (data) => {
-    const url = `/sendOTP.php`;
+    const url = `auth/sendOTP.php`;
     return axiosClient.post(url, data);
   },
 
   newPassword: (data) => {
-    const url = `/newPass.php`;
+    const url = `auth/newPass.php`;
     return axiosClient.post(url, data);
   },
 };

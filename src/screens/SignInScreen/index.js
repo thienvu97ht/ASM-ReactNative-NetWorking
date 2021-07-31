@@ -62,13 +62,16 @@ const SignInScreen = ({ navigation }) => {
       const loginApp = async () => {
         const res = await authenApi.checkLogin(loginForm);
 
+        if (res.message) {
+          alert(res.message);
+        }
         const access_token = res.access_token;
         if (access_token) {
           await AsyncStorage.setItem("access_token", access_token);
           // chuyển trang
           navigation.navigate("Main");
         } else {
-          alert("Tài khoản hoặc mật khẩu không chính xác");
+          // alert("Tài khoản hoặc mật khẩu không chính xác");
         }
       };
 
