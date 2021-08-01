@@ -1,33 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList, View, SafeAreaView } from "react-native";
-import axios from "axios";
-import ProductListItem from "../../components/ProductListItem";
+import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import productApi from "../../api/products";
+import ProductItem from "../../components/ProductItem";
+import COLORS from "../../consts/colors";
 
 export default function HomeScreen() {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const productList = await productApi.getAllProducts();
-      setProducts(productList);
-    };
-
     fetchData();
   }, []);
 
+  const fetchData = async () => {
+    setIsLoading(true);
+    const productList = await productApi.getAllProductsByUsername();
+    setIsLoading(false);
+    setProducts(productList);
+  };
+
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{ flex: 1, paddingHorizontal: 20, backgroundColor: COLORS.white }}>
       <FlatList
-        data={products}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
+        refreshing={isLoading}
+        onRefresh={fetchData}
+        data={products}
         numColumns={2}
         keyExtractor={(item) => `${item.id}`}
-        renderItem={({ item }) => (
-          <View style={styles.wrapper}>
-            <ProductListItem product={item} />
-          </View>
-        )}
+        renderItem={({ item }) => <ProductItem product={item} />}
       />
     </SafeAreaView>
   );
@@ -35,8 +39,8 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 16,
-    paddingHorizontal: 8,
+    marginTop: 10,
+    paddingBottom: 50,
   },
 
   wrapper: {

@@ -1,8 +1,8 @@
 import axiosClient from "./axiosClient";
 
 const productApi = {
-  getAllProducts: () => {
-    const url = `products/getAllProducts.php`;
+  getAllProductsByUsername: () => {
+    const url = `products/getAllProductByUsername.php`;
     return axiosClient.get(url);
   },
 
