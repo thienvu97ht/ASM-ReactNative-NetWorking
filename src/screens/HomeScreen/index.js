@@ -4,9 +4,10 @@ import productApi from "../../api/products";
 import ProductItem from "../../components/ProductItem";
 import COLORS from "../../consts/colors";
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { navigtion } = props;
 
   useEffect(() => {
     fetchData();
@@ -40,11 +41,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    paddingBottom: 50,
-  },
-
-  wrapper: {
-    flex: 1,
-    paddingHorizontal: 8,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
 });

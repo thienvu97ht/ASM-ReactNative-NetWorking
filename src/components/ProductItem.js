@@ -3,11 +3,13 @@ import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { formatPrice } from "../utils/Number";
+import { useNavigation } from "@react-navigation/native";
 import COLORS from "../consts/colors";
 const width = Dimensions.get("window").width / 2 - 30;
 
 export default function ProductItem(props) {
-  const { product, navigation } = props;
+  const { product } = props;
+  const navigation = useNavigation();
 
   return (
     <TouchableOpacity
@@ -38,6 +40,7 @@ export default function ProductItem(props) {
         <Text style={{ fontWeight: "bold", fontSize: 17, marginTop: 10 }}>
           {product.nameProduct}
         </Text>
+
         <View
           style={{
             flexDirection: "row",
@@ -47,6 +50,7 @@ export default function ProductItem(props) {
           <Text style={{ fontSize: 19, fontWeight: "bold" }}>
             {formatPrice(product.price)} VNĐ
           </Text>
+
           <View
             style={{
               height: 25,

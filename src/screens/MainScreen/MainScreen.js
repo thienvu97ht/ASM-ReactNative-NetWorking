@@ -2,10 +2,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import DetailsScreen from "../DetailsScreen";
 import CartScreen from "../CartSceen";
 import HomeScreen from "../HomeScreen";
 import SettingsScreen from "../SettingsScreen";
 import UserScreen from "../UserScreen";
+import ProductItem from "../../components/ProductItem";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -94,6 +96,21 @@ export function HomeStackScreen() {
           headerLeft: () => {
             return null;
           },
+        }}
+      />
+      <HomeStack.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={{
+          title: "Details",
+          headerStyle: {
+            backgroundColor: "#f1d276",
+          },
+          headerTintColor: "#000",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerTitleAlign: "center",
         }}
       />
     </HomeStack.Navigator>
