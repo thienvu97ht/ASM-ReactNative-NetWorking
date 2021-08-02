@@ -2,7 +2,7 @@ import axiosClient from "./axiosClient";
 
 const userApi = {
   getUser: () => {
-    const url = `user/getOne.php`;
+    const url = `user/getUserProfile.php`;
     return axiosClient.get(url);
   },
 };

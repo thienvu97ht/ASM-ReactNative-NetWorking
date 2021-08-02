@@ -2,12 +2,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import DetailsScreen from "../DetailsScreen";
 import CartScreen from "../CartSceen";
+import DetailsScreen from "../DetailsScreen";
 import HomeScreen from "../HomeScreen";
 import SettingsScreen from "../SettingsScreen";
 import UserScreen from "../UserScreen";
-import ProductItem from "../../components/ProductItem";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { View } from "react-native-animatable";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -102,7 +103,7 @@ export function HomeStackScreen() {
         name="Details"
         component={DetailsScreen}
         options={{
-          title: "Details",
+          title: "Chi tiết",
           headerStyle: {
             backgroundColor: "#f1d276",
           },
@@ -161,6 +162,18 @@ export function UserStackScreen() {
           headerLeft: () => {
             return null;
           },
+
+          headerRight: () => (
+            <View style={{ marginRight: 10 }}>
+              <MaterialCommunityIcons.Button
+                name="account-edit"
+                size={25}
+                backgroundColor="#f1d276"
+                color="#000"
+                onPress={() => navigation.navigate("EditProfile")}
+              />
+            </View>
+          ),
         }}
       />
     </UserStack.Navigator>

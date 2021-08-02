@@ -7,7 +7,6 @@ import COLORS from "../../consts/colors";
 export default function HomeScreen(props) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { navigtion } = props;
 
   useEffect(() => {
     fetchData();

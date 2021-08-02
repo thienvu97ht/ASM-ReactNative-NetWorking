@@ -33,7 +33,9 @@ const DetailsScreen = (props) => {
           </View>
         </View>
         <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>About</Text>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            Mô tả sản phẩm
+          </Text>
           <Text
             style={{
               color: "grey",
@@ -78,7 +80,7 @@ const DetailsScreen = (props) => {
                   fontSize: 18,
                   fontWeight: "bold",
                 }}>
-                Buy
+                Mua ngay
               </Text>
             </View>
           </View>

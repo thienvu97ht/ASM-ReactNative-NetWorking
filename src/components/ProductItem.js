@@ -12,9 +12,7 @@ export default function ProductItem(props) {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate("Details", product)}>
+    <View>
       <View style={styles.card}>
         <View style={styles.likeBox}>
           <View
@@ -33,13 +31,20 @@ export default function ProductItem(props) {
             />
           </View>
         </View>
-        <View style={styles.imgBox}>
+        <TouchableOpacity
+          style={styles.imgBox}
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate("Details", product)}>
           <Image style={styles.img} source={{ uri: product.images }} />
-        </View>
+        </TouchableOpacity>
 
-        <Text style={{ fontWeight: "bold", fontSize: 17, marginTop: 10 }}>
-          {product.nameProduct}
-        </Text>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate("Details", product)}>
+          <Text style={{ fontWeight: "bold", fontSize: 17, marginTop: 10 }}>
+            {product.nameProduct}
+          </Text>
+        </TouchableOpacity>
 
         <View
           style={{
@@ -51,7 +56,9 @@ export default function ProductItem(props) {
             {formatPrice(product.price)} VNĐ
           </Text>
 
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate("Details", product)}
             style={{
               height: 25,
               width: 25,
@@ -64,10 +71,10 @@ export default function ProductItem(props) {
               style={{ fontSize: 22, color: COLORS.white, fontWeight: "bold" }}>
               +
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 }
 
