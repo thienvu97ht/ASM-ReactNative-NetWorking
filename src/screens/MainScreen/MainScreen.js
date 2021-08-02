@@ -9,6 +9,8 @@ import SettingsScreen from "../SettingsScreen";
 import UserScreen from "../UserScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { View } from "react-native-animatable";
+import FavoritesScreen from "../FavoritesScreen";
+import { Button } from "react-native";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -174,6 +176,21 @@ export function UserStackScreen() {
               />
             </View>
           ),
+        }}
+      />
+      <HomeStack.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          title: "Sản phẩm yêu thích",
+          headerStyle: {
+            backgroundColor: "#f1d276",
+          },
+          headerTintColor: "#000",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerTitleAlign: "center",
         }}
       />
     </UserStack.Navigator>

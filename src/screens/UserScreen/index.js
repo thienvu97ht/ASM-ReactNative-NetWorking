@@ -108,7 +108,7 @@ export default function UserScreen(props) {
         </View>
 
         <View style={styles.menuWrapper}>
-          <TouchableRipple onPress={() => {}}>
+          <TouchableRipple onPress={() => navigation.navigate("Favorites")}>
             <View style={styles.menuItem}>
               <Icon name="heart-outline" color="#ff6666" size={25} />
               <Text style={styles.menuItemText}>Sản phẩm yêu thích</Text>

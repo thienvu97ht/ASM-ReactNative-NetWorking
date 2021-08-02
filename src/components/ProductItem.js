@@ -5,17 +5,36 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { formatPrice } from "../utils/Number";
 import { useNavigation } from "@react-navigation/native";
 import COLORS from "../consts/colors";
+import favoriteApi from "../api/favorites";
+import { useState } from "react";
 const width = Dimensions.get("window").width / 2 - 30;
 
 export default function ProductItem(props) {
   const { product } = props;
   const navigation = useNavigation();
+  const [a, setA] = useState("");
+
+  const toggleLike = () => {
+    if (product.is_like) {
+      console.log("un like");
+      const unlikeFavorite = async () => {
+        const resp = await favoriteApi.deleteFavorite({ id: product.id });
+        setA("123");
+        console.log(resp);
+      };
+      unlikeFavorite();
+    } else {
+      console.log("like");
+    }
+  };
 
   return (
     <View>
       <View style={styles.card}>
         <View style={styles.likeBox}>
-          <View
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={toggleLike}
             style={[
               styles.likeButton,
               {
@@ -29,7 +48,7 @@ export default function ProductItem(props) {
               size={18}
               color={product.is_like ? COLORS.red : COLORS.black}
             />
-          </View>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
           style={styles.imgBox}
