@@ -10,6 +10,11 @@ const favoriteApi = {
     const url = `favorites/deleteFavorite.php`;
     return axiosClient.post(url, id);
   },
+
+  addFavorite: (id) => {
+    const url = `favorites/addFavorite.php`;
+    return axiosClient.post(url, id);
+  },
 };
 
 export default favoriteApi;

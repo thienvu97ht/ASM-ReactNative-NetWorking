@@ -12,19 +12,20 @@ const width = Dimensions.get("window").width / 2 - 30;
 export default function ProductItem(props) {
   const { product } = props;
   const navigation = useNavigation();
-  const [a, setA] = useState("");
 
   const toggleLike = () => {
     if (product.is_like) {
       console.log("un like");
-      const unlikeFavorite = async () => {
+      const unlikeProduct = async () => {
         const resp = await favoriteApi.deleteFavorite({ id: product.id });
-        setA("123");
-        console.log(resp);
       };
-      unlikeFavorite();
+      unlikeProduct();
     } else {
       console.log("like");
+      const likeProduct = async () => {
+        const resp = await favoriteApi.addFavorite({ id: product.id });
+      };
+      likeProduct();
     }
   };
 
