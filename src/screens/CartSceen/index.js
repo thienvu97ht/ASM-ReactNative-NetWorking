@@ -30,7 +30,11 @@ export default function CartScreen() {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, paddingHorizontal: 20, backgroundColor: COLORS.white }}>
+      style={{
+        flex: 1,
+        paddingHorizontal: 20,
+        backgroundColor: COLORS.white,
+      }}>
       {products.length === 0 ? (
         <ScrollView
           contentContainerStyle={styles.center}
@@ -43,7 +47,7 @@ export default function CartScreen() {
         </ScrollView>
       ) : (
         <ScrollView
-          style={styles.container}
+          contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 10,
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 30,
   },
 
   center: {

@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Feather";
 import COLORS from "../consts/colors";
@@ -8,6 +8,8 @@ import { formatPrice } from "../utils/Number";
 
 export default function CartItem(props) {
   const { products } = props;
+
+  const handleDiscount = () => {};
 
   return (
     <View>
@@ -60,6 +62,31 @@ export default function CartItem(props) {
           </View>
         </View>
       ))}
+
+      <View style={styles.discountContainer}>
+        <TextInput
+          placeholder="Nhập mã giảm giá của bạn"
+          style={styles.discountInput}
+          autoCapitalize="none"
+          onChangeText={(val) => handleDiscount(val)}
+        />
+
+        <TouchableOpacity
+          style={([styles.btnBuy], { width: 120 })}
+          activeOpacity={0.6}>
+          <LinearGradient colors={["#edd078", "#edbd2d"]} style={styles.btnBuy}>
+            <Text
+              style={[
+                styles.textBtn,
+                {
+                  color: "#444",
+                },
+              ]}>
+              Kiểm tra
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
 
       <TouchableOpacity style={styles.btnBuy} activeOpacity={0.6}>
         <LinearGradient colors={["#edd078", "#edbd2d"]} style={styles.btnBuy}>
@@ -141,6 +168,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  discountContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+
+  discountInput: {
+    borderWidth: 1,
+    flex: 1,
+    borderRadius: 10,
+    marginRight: 10,
+    paddingLeft: 20,
+    fontSize: 16,
+    borderColor: "grey",
   },
 
   //   Button
