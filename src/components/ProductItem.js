@@ -1,12 +1,11 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { formatPrice } from "../utils/Number";
-import { useNavigation } from "@react-navigation/native";
-import COLORS from "../consts/colors";
 import favoriteApi from "../api/favorites";
-import { useState } from "react";
+import COLORS from "../consts/colors";
+import { formatPrice } from "../utils/Number";
 const width = Dimensions.get("window").width / 2 - 30;
 
 export default function ProductItem(props) {
