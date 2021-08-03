@@ -20,7 +20,7 @@ const SplashScreen = ({ navigation }) => {
         if (access_token !== null) {
           const fetchData = async () => {
             const resp = await userApi.getUser();
-            if (resp.message) {
+            if (resp) {
               navigation.navigate("Main");
             }
           };

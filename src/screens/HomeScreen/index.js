@@ -19,6 +19,21 @@ export default function HomeScreen(props) {
     setProducts(productList);
   };
 
+  const setIsLike = (id) => {
+    const index = products.findIndex((x) => x.id === id);
+
+    const newProductList = [...products];
+    const newProduct = {
+      ...newProductList[index],
+      is_like: newProductList[index].is_like ? null : 1,
+    };
+
+    newProductList[index] = newProduct;
+
+    // update product list
+    setProducts(newProductList);
+  };
+
   return (
     <SafeAreaView
       style={{ flex: 1, paddingHorizontal: 20, backgroundColor: COLORS.white }}>
@@ -31,7 +46,9 @@ export default function HomeScreen(props) {
         data={products}
         numColumns={2}
         keyExtractor={(item) => `${item.id}`}
-        renderItem={({ item }) => <ProductItem product={item} />}
+        renderItem={({ item }) => (
+          <ProductItem product={item} setIsLike={setIsLike} />
+        )}
       />
     </SafeAreaView>
   );

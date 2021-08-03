@@ -10,23 +10,25 @@ import { useState } from "react";
 const width = Dimensions.get("window").width / 2 - 30;
 
 export default function ProductItem(props) {
-  const { product } = props;
+  const { product, setIsLike } = props;
   const navigation = useNavigation();
 
   const toggleLike = () => {
     if (product.is_like) {
-      console.log("un like");
+      // Unlike
       const unlikeProduct = async () => {
         const resp = await favoriteApi.deleteFavorite({ id: product.id });
       };
       unlikeProduct();
     } else {
-      console.log("like");
+      // Like
       const likeProduct = async () => {
         const resp = await favoriteApi.addFavorite({ id: product.id });
       };
       likeProduct();
     }
+
+    setIsLike(product.id);
   };
 
   return (
@@ -47,7 +49,7 @@ export default function ProductItem(props) {
             <Icon
               name="favorite"
               size={18}
-              color={product.is_like ? COLORS.red : COLORS.black}
+              color={!product.is_like ? "#000" : "#F52A2A"}
             />
           </TouchableOpacity>
         </View>
