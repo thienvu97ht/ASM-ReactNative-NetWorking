@@ -23,6 +23,10 @@ const cartSilce = createSlice({
 
       state.productInCart.splice(index, 1);
     },
+
+    addProductInCart(state, action) {
+      state.productInCart.push(action.payload);
+    },
   },
   extraReducers: {
     [fetchProducts.fulfilled]: (state, action) => {
@@ -32,5 +36,5 @@ const cartSilce = createSlice({
 });
 
 const { actions, reducer } = cartSilce;
-export const { deleteProductInCart } = actions;
+export const { deleteProductInCart, addProductInCart } = actions;
 export default reducer;

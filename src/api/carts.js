@@ -10,6 +10,11 @@ const cartApi = {
     const url = `carts/deleteProductInCart.php`;
     return axiosClient.post(url, id);
   },
+
+  addProductToCart: (data) => {
+    const url = `carts/addProductToCart.php`;
+    return axiosClient.post(url, data);
+  },
 };
 
 export default cartApi;

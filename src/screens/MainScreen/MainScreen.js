@@ -1,9 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native-animatable";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../app/cartSilce";
 import CartScreen from "../CartSceen";
 import DetailsScreen from "../DetailsScreen";
 import FavoritesScreen from "../FavoritesScreen";
@@ -18,6 +20,18 @@ const UserStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 
 function MainScreen() {
+  const cartState = useSelector((state) => state.carts);
+  const products = cartState.productInCart;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const action = fetchProducts();
+      await dispatch(action);
+    };
+    fetchData();
+  }, []);
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -54,7 +68,7 @@ function MainScreen() {
         name="Cart"
         component={CartStackScreen}
         options={{
-          tabBarBadge: 3,
+          tabBarBadge: products.length,
           title: "Giỏ hàng",
         }}
       />

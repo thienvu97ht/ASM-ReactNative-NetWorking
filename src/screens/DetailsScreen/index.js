@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
+import cartApi from "../../api/carts";
+import { addProductInCart } from "../../app/cartSilce";
 import COLORS from "../../consts/colors";
 import { formatPrice } from "../../utils/Number";
 
@@ -8,6 +11,7 @@ const DetailsScreen = (props) => {
   const { route } = props;
   const product = route.params;
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
   const increase = () => {
     const newQuantity = quantity + 1;
@@ -22,12 +26,26 @@ const DetailsScreen = (props) => {
   };
 
   const buyProduct = () => {
+    const payload = {
+      id: product.id,
+      images: product.images,
+      nameProduct: product.nameProduct,
+      price: product.price,
+      quantity: quantity,
+    };
+
+    const action = addProductInCart(payload);
+    dispatch(action);
+
     const data = {
       id: product.id,
       quantity: quantity,
     };
+    const addProduct = async () => {
+      const resp = await cartApi.addProductToCart(data);
+    };
 
-    console.log(data);
+    addProduct();
   };
 
   return (
