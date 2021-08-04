@@ -1,12 +1,34 @@
-import React from "react";
-import { View, SafeAreaView, Image, Text, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import React, { useState } from "react";
+import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import COLORS from "../../consts/colors";
 import { formatPrice } from "../../utils/Number";
 
 const DetailsScreen = (props) => {
-  const { navigation, route } = props;
+  const { route } = props;
   const product = route.params;
+  const [quantity, setQuantity] = useState(1);
+
+  const increase = () => {
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+  };
+
+  const decrease = () => {
+    if (quantity > 1) {
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+    }
+  };
+
+  const buyProduct = () => {
+    const data = {
+      id: product.id,
+      quantity: quantity,
+    };
+
+    console.log(data);
+  };
 
   return (
     <SafeAreaView
@@ -57,23 +79,32 @@ const DetailsScreen = (props) => {
                 flexDirection: "row",
                 alignItems: "center",
               }}>
-              <View style={styles.borderBtn}>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={decrease}
+                style={styles.borderBtn}>
                 <Text style={styles.borderBtnText}>-</Text>
-              </View>
+              </TouchableOpacity>
               <Text
                 style={{
                   fontSize: 20,
                   marginHorizontal: 10,
                   fontWeight: "bold",
                 }}>
-                1
+                {quantity}
               </Text>
-              <View style={styles.borderBtn}>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={increase}
+                style={styles.borderBtn}>
                 <Text style={styles.borderBtnText}>+</Text>
-              </View>
+              </TouchableOpacity>
             </View>
 
-            <View style={styles.buyBtn}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={buyProduct}
+              style={styles.buyBtn}>
               <Text
                 style={{
                   color: COLORS.white,
@@ -82,7 +113,7 @@ const DetailsScreen = (props) => {
                 }}>
                 Mua ngay
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

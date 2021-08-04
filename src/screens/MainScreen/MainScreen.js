@@ -2,15 +2,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import { View } from "react-native-animatable";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import CartScreen from "../CartSceen";
 import DetailsScreen from "../DetailsScreen";
+import FavoritesScreen from "../FavoritesScreen";
 import HomeScreen from "../HomeScreen";
 import SettingsScreen from "../SettingsScreen";
 import UserScreen from "../UserScreen";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { View } from "react-native-animatable";
-import FavoritesScreen from "../FavoritesScreen";
-import { Button } from "react-native";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();

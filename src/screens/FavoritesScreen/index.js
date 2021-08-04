@@ -23,12 +23,7 @@ export default function FavoritesScreen(props) {
     const index = favorites.findIndex((x) => x.id === id);
 
     const newProductList = [...favorites];
-    const newProduct = {
-      ...newProductList[index],
-      is_like: newProductList[index].is_like ? null : 1,
-    };
-
-    newProductList[index] = newProduct;
+    newProductList.splice(index, 1);
 
     // update product list
     setFavorites(newProductList);

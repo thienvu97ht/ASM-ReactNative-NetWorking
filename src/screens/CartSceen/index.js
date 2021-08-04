@@ -1,3 +1,4 @@
+import { unwrapResult } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import {
   Image,
@@ -6,16 +7,20 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import cartApi from "../../api/carts";
+import { deleteProductInCart, fetchProducts } from "../../app/cartSilce";
 import EmpryCart from "../../assets/empty_cart.png";
 import CartItem from "../../components/cartItem";
 import COLORS from "../../consts/colors";
 
 export default function CartScreen() {
   const [isLoading, setIsLoading] = useState(false);
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+
+  const cartState = useSelector((state) => state.carts);
+  const products = cartState.productInCart;
 
   useEffect(() => {
     fetchData();
@@ -23,9 +28,19 @@ export default function CartScreen() {
 
   const fetchData = async () => {
     setIsLoading(true);
-    const data = await cartApi.getAllProductsInCart();
-    setProducts(data);
+    const action = fetchProducts();
+    await dispatch(action);
     setIsLoading(false);
+  };
+
+  const handleDeleteProduct = (id) => {
+    const action = deleteProductInCart(id);
+    dispatch(action);
+
+    const deleteProduct = async () => {
+      const resp = await cartApi.deleteProductInCart({ id });
+    };
+    deleteProduct();
   };
 
   return (
@@ -52,7 +67,7 @@ export default function CartScreen() {
           refreshControl={
             <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
           }>
-          <CartItem products={products} />
+          <CartItem products={products} deleteProduct={handleDeleteProduct} />
         </ScrollView>
       )}
     </SafeAreaView>

@@ -5,6 +5,11 @@ const cartApi = {
     const url = `carts/getProductInCart.php`;
     return axiosClient.get(url);
   },
+
+  deleteProductInCart: (id) => {
+    const url = `carts/deleteProductInCart.php`;
+    return axiosClient.post(url, id);
+  },
 };
 
 export default cartApi;

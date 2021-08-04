@@ -3,13 +3,24 @@ import React from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Feather";
+import { useSelector } from "react-redux";
 import COLORS from "../consts/colors";
 import { formatPrice } from "../utils/Number";
 
 export default function CartItem(props) {
-  const { products } = props;
+  const { products, deleteProduct } = props;
 
   const handleDiscount = () => {};
+
+  const getIdProduct = (id) => {
+    deleteProduct(id);
+  };
+
+  const cartState = useSelector((state) => state.carts);
+
+  const checkOut = () => {
+    console.log(cartState.productInCart);
+  };
 
   return (
     <View>
@@ -54,7 +65,10 @@ export default function CartItem(props) {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.deleteProduct} activeOpacity={0.6}>
+            <TouchableOpacity
+              style={styles.deleteProduct}
+              activeOpacity={0.6}
+              onPress={() => getIdProduct(product.id)}>
               <View style={styles.deleteButton}>
                 <Icon name="trash-2" size={22} color="#000" />
               </View>
@@ -88,7 +102,10 @@ export default function CartItem(props) {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.btnBuy} activeOpacity={0.6}>
+      <TouchableOpacity
+        style={styles.btnBuy}
+        activeOpacity={0.6}
+        onPress={checkOut}>
         <LinearGradient colors={["#edd078", "#edbd2d"]} style={styles.btnBuy}>
           <Text
             style={[
