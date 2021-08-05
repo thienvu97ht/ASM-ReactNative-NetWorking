@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import cartApi from "../../api/carts";
 import { addProductInCart } from "../../app/cartSilce";
 import COLORS from "../../consts/colors";
@@ -10,14 +10,20 @@ import { formatPrice } from "../../utils/Number";
 const DetailsScreen = (props) => {
   const { route } = props;
   const product = route.params;
-  const [quantity, setQuantity] = useState(1);
-  const dispatch = useDispatch();
 
+  const [quantity, setQuantity] = useState(1);
+
+  const dispatch = useDispatch();
+  const cartState = useSelector((state) => state.carts);
+  const productInCart = cartState.productInCart;
+
+  // Tăng số lượng
   const increase = () => {
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
   };
 
+  // Giảm số lượng
   const decrease = () => {
     if (quantity > 1) {
       const newQuantity = quantity - 1;
@@ -25,6 +31,7 @@ const DetailsScreen = (props) => {
     }
   };
 
+  // Thêm vào giỏ hàng
   const buyProduct = () => {
     const payload = {
       id: product.id,
@@ -34,6 +41,9 @@ const DetailsScreen = (props) => {
       quantity: quantity,
     };
 
+    productInCart.forEach((product) => {});
+
+    // Nếu sản phẩm chưa tồn tại trong giỏ hàng
     const action = addProductInCart(payload);
     dispatch(action);
 
@@ -44,7 +54,6 @@ const DetailsScreen = (props) => {
     const addProduct = async () => {
       const resp = await cartApi.addProductToCart(data);
     };
-
     addProduct();
   };
 

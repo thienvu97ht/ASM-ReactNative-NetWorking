@@ -23,20 +23,25 @@ const SettingsStack = createStackNavigator();
 function MainScreen() {
   const [total, setTotal] = useState();
   const dispatch = useDispatch();
+  const cartState = useSelector((state) => state.carts);
 
   useEffect(() => {
     const fetchData = async () => {
       const action = fetchProducts();
-      const resultAction = await dispatch(action);
-      const products = unwrapResult(resultAction);
-      let totalQuantity = 0;
-      products.forEach((product) => {
-        totalQuantity += Number(product.quantity);
-      });
-      setTotal(totalQuantity);
+      await dispatch(action);
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const productInCart = cartState.productInCart;
+
+    let totalQuantity = 0;
+    productInCart.forEach((product) => {
+      totalQuantity += Number(product.quantity);
+    });
+    setTotal(totalQuantity);
+  }, [cartState]);
 
   return (
     <Tab.Navigator
