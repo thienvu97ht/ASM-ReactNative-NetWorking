@@ -46,7 +46,7 @@ const DetailsScreen = (props) => {
       images: product.images,
       nameProduct: product.nameProduct,
       price: product.price,
-      quantity: quantity,
+      quantity: Number(quantity),
     };
 
     let index = productInCart.findIndex((x) => x.id === payload.id);
@@ -59,7 +59,7 @@ const DetailsScreen = (props) => {
 
       const data = {
         id: product.id,
-        quantity: quantity,
+        quantity: Number(quantity),
       };
       addProduct(data);
     } else {

@@ -16,6 +16,8 @@ import COLORS from "../../consts/colors";
 
 export default function CartScreen() {
   const [isLoading, setIsLoading] = useState(false);
+  const [discount, setDiscount] = useState(0);
+
   const dispatch = useDispatch();
 
   const cartState = useSelector((state) => state.carts);
@@ -24,6 +26,11 @@ export default function CartScreen() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  let totalPrice = 0;
+  products.forEach((product) => {
+    totalPrice += product.price * product.quantity;
+  });
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -66,7 +73,12 @@ export default function CartScreen() {
           refreshControl={
             <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
           }>
-          <CartItem products={products} deleteProduct={handleDeleteProduct} />
+          <CartItem
+            products={products}
+            deleteProduct={handleDeleteProduct}
+            subTotal={totalPrice}
+            discount={discount}
+          />
         </ScrollView>
       )}
     </SafeAreaView>

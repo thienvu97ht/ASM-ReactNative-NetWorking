@@ -9,9 +9,10 @@ import COLORS from "../consts/colors";
 import { formatPrice } from "../utils/Number";
 
 export default function CartItem(props) {
-  const { products, deleteProduct } = props;
-  const [disabled, setDisabled] = useState(true);
+  const { products, deleteProduct, subTotal, discount } = props;
   const navigation = useNavigation();
+
+  const [disabled, setDisabled] = useState(true);
 
   const handleDiscount = (val) => {
     if (val.length !== 0) {
@@ -25,11 +26,7 @@ export default function CartItem(props) {
     deleteProduct(id);
   };
 
-  const cartState = useSelector((state) => state.carts);
-
-  const checkOut = () => {
-    console.log(cartState.productInCart);
-  };
+  const checkOut = () => {};
 
   return (
     <View>
@@ -119,10 +116,29 @@ export default function CartItem(props) {
         </TouchableOpacity>
       </View>
 
+      <View style={styles.calculatedContainer}>
+        <View style={styles.calculatedBox}>
+          <Text style={styles.textCheckOut}>Tạm tính</Text>
+          <Text style={styles.textCheckOut}>{formatPrice(subTotal)} VNĐ</Text>
+        </View>
+
+        <View style={styles.calculatedBox}>
+          <Text style={styles.textCheckOut}>Giảm giá</Text>
+          <Text style={styles.textCheckOut}>- {formatPrice(discount)} VNĐ</Text>
+        </View>
+
+        <View style={styles.calculatedBox}>
+          <Text style={styles.textCheckOut}>Tổng cộng</Text>
+          <Text style={styles.textCheckOut}>
+            {formatPrice(subTotal - discount)} VNĐ
+          </Text>
+        </View>
+      </View>
+
       <TouchableOpacity
         style={styles.btnBuy}
         activeOpacity={0.6}
-        onPress={checkOut}>
+        onPress={() => navigation.navigate("CheckOut")}>
         <LinearGradient colors={["#edd078", "#edbd2d"]} style={styles.btnBuy}>
           <Text
             style={[
@@ -232,5 +248,19 @@ const styles = StyleSheet.create({
   textBtn: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+
+  calculatedContainer: {
+    paddingBottom: 10,
+  },
+
+  calculatedBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 10,
+  },
+
+  textCheckOut: {
+    fontSize: 16,
   },
 });

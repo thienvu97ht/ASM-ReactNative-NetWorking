@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../app/cartSilce";
 import CartScreen from "../CartSceen";
+import CheckOutScreen from "../CheckOutScreen";
 import DetailsScreen from "../DetailsScreen";
 import FavoritesScreen from "../FavoritesScreen";
 import HomeScreen from "../HomeScreen";
@@ -170,6 +171,21 @@ export function CartStackScreen() {
         component={DetailsScreen}
         options={{
           title: "Chi tiết",
+          headerStyle: {
+            backgroundColor: "#f1d276",
+          },
+          headerTintColor: "#000",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerTitleAlign: "center",
+        }}
+      />
+      <CartStack.Screen
+        name="CheckOut"
+        component={CheckOutScreen}
+        options={{
+          title: "Thanh toán",
           headerStyle: {
             backgroundColor: "#f1d276",
           },
