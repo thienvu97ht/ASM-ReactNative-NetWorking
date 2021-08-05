@@ -1,4 +1,3 @@
-import { unwrapResult } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import {
   Image,

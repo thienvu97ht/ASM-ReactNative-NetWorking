@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
@@ -9,6 +10,7 @@ import { formatPrice } from "../utils/Number";
 
 export default function CartItem(props) {
   const { products, deleteProduct } = props;
+  const navigation = useNavigation();
 
   const handleDiscount = () => {};
 
@@ -27,12 +29,17 @@ export default function CartItem(props) {
       {products.map((product, index) => (
         <View key={index} style={styles.container}>
           <View style={styles.card}>
-            <TouchableOpacity style={styles.imgBox} activeOpacity={0.8}>
+            <TouchableOpacity
+              style={styles.imgBox}
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate("Details", product)}>
               <Image style={styles.img} source={{ uri: product.images }} />
             </TouchableOpacity>
 
             <View style={styles.name_priceBox}>
-              <TouchableOpacity activeOpacity={0.8} onPress={() => {}}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate("Details", product)}>
                 <Text
                   style={{ fontWeight: "bold", fontSize: 17, marginTop: 10 }}>
                   {product.nameProduct}

@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect } from "react";
+import { unwrapResult } from "@reduxjs/toolkit";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native-animatable";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,14 +21,19 @@ const UserStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 
 function MainScreen() {
-  const cartState = useSelector((state) => state.carts);
-  const products = cartState.productInCart;
+  const [total, setTotal] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
       const action = fetchProducts();
-      await dispatch(action);
+      const resultAction = await dispatch(action);
+      const products = unwrapResult(resultAction);
+      let totalQuantity = 0;
+      products.forEach((product) => {
+        totalQuantity += Number(product.quantity);
+      });
+      setTotal(totalQuantity);
     };
     fetchData();
   }, []);
@@ -68,7 +74,7 @@ function MainScreen() {
         name="Cart"
         component={CartStackScreen}
         options={{
-          tabBarBadge: products.length,
+          tabBarBadge: total,
           title: "Giỏ hàng",
         }}
       />
@@ -152,6 +158,21 @@ export function CartStackScreen() {
           headerLeft: () => {
             return null;
           },
+        }}
+      />
+      <CartStack.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={{
+          title: "Chi tiết",
+          headerStyle: {
+            backgroundColor: "#f1d276",
+          },
+          headerTintColor: "#000",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerTitleAlign: "center",
         }}
       />
     </CartStack.Navigator>
