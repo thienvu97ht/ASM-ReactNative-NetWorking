@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Feather";
@@ -10,9 +10,16 @@ import { formatPrice } from "../utils/Number";
 
 export default function CartItem(props) {
   const { products, deleteProduct } = props;
+  const [disabled, setDisabled] = useState(true);
   const navigation = useNavigation();
 
-  const handleDiscount = () => {};
+  const handleDiscount = (val) => {
+    if (val.length !== 0) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  };
 
   const getIdProduct = (id) => {
     deleteProduct(id);
@@ -94,8 +101,11 @@ export default function CartItem(props) {
 
         <TouchableOpacity
           style={([styles.btnBuy], { width: 120 })}
+          disabled={disabled}
           activeOpacity={0.6}>
-          <LinearGradient colors={["#edd078", "#edbd2d"]} style={styles.btnBuy}>
+          <LinearGradient
+            colors={disabled ? ["#d9d9d9", "#999"] : ["#edd078", "#edbd2d"]}
+            style={styles.btnBuy}>
             <Text
               style={[
                 styles.textBtn,

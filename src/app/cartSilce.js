@@ -27,6 +27,14 @@ const cartSilce = createSlice({
     addProductInCart(state, action) {
       state.productInCart.push(action.payload);
     },
+
+    updateProductInCart(state, action) {
+      const { id, quantity } = action.payload;
+      const index = state.productInCart.findIndex((x) => x.id === id);
+
+      state.productInCart[index].quantity =
+        Number(state.productInCart[index].quantity) + Number(quantity);
+    },
   },
   extraReducers: {
     [fetchProducts.fulfilled]: (state, action) => {
@@ -36,5 +44,6 @@ const cartSilce = createSlice({
 });
 
 const { actions, reducer } = cartSilce;
-export const { deleteProductInCart, addProductInCart } = actions;
+export const { deleteProductInCart, addProductInCart, updateProductInCart } =
+  actions;
 export default reducer;

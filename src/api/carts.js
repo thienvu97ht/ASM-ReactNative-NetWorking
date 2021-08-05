@@ -15,6 +15,11 @@ const cartApi = {
     const url = `carts/addProductToCart.php`;
     return axiosClient.post(url, data);
   },
+
+  updateProductInCart: (data) => {
+    const url = `carts/updateProductInCart.php`;
+    return axiosClient.post(url, data);
+  },
 };
 
 export default cartApi;

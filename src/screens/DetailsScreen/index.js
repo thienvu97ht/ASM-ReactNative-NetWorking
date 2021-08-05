@@ -3,7 +3,7 @@ import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import cartApi from "../../api/carts";
-import { addProductInCart } from "../../app/cartSilce";
+import { addProductInCart, updateProductInCart } from "../../app/cartSilce";
 import COLORS from "../../consts/colors";
 import { formatPrice } from "../../utils/Number";
 
@@ -31,6 +31,14 @@ const DetailsScreen = (props) => {
     }
   };
 
+  const addProduct = async (data) => {
+    await cartApi.addProductToCart(data);
+  };
+
+  const updateProduct = async (data) => {
+    await cartApi.updateProductInCart(data);
+  };
+
   // Thêm vào giỏ hàng
   const buyProduct = () => {
     const payload = {
@@ -41,20 +49,31 @@ const DetailsScreen = (props) => {
       quantity: quantity,
     };
 
-    productInCart.forEach((product) => {});
+    let index = productInCart.findIndex((x) => x.id === payload.id);
 
-    // Nếu sản phẩm chưa tồn tại trong giỏ hàng
-    const action = addProductInCart(payload);
-    dispatch(action);
+    if (index === -1) {
+      // Nếu sản phẩm chưa tồn tại trong giỏ hàng
+      window.alert("Thêm sản phẩm vào giỏ hàng thành công!");
+      const action = addProductInCart(payload);
+      dispatch(action);
 
-    const data = {
-      id: product.id,
-      quantity: quantity,
-    };
-    const addProduct = async () => {
-      const resp = await cartApi.addProductToCart(data);
-    };
-    addProduct();
+      const data = {
+        id: product.id,
+        quantity: quantity,
+      };
+      addProduct(data);
+    } else {
+      window.alert("Thêm sản phẩm vào giỏ hàng thành công!");
+      const action = updateProductInCart(payload);
+      dispatch(action);
+
+      const data = {
+        id: product.id,
+        quantity: Number(productInCart[index].quantity) + Number(quantity),
+      };
+
+      updateProduct(data);
+    }
   };
 
   return (
