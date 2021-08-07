@@ -11,6 +11,7 @@ import CartScreen from "../CartSceen";
 import CheckOutScreen from "../CheckOutScreen";
 import DetailsScreen from "../DetailsScreen";
 import FavoritesScreen from "../FavoritesScreen";
+import finishOrderScreen from "../FinishOrderScreen";
 import HomeScreen from "../HomeScreen";
 import SettingsScreen from "../SettingsScreen";
 import UserScreen from "../UserScreen";
@@ -188,6 +189,21 @@ export function CartStackScreen() {
         component={CheckOutScreen}
         options={{
           title: "Thanh toán",
+          headerStyle: {
+            backgroundColor: "#f1d276",
+          },
+          headerTintColor: "#000",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerTitleAlign: "center",
+        }}
+      />
+      <CartStack.Screen
+        name="FinishOrder"
+        component={finishOrderScreen}
+        options={{
+          title: "Hoàn tất",
           headerStyle: {
             backgroundColor: "#f1d276",
           },

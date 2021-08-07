@@ -13,9 +13,12 @@ import COLORS from "../../consts/colors";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { formatPrice } from "../../utils/Number";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CheckOutScreen(props) {
   const { total } = props.route.params;
+  const navigation = useNavigation();
+
   const userState = useSelector((state) => state.user);
   const user = userState.user;
   // console.log(total);
@@ -116,7 +119,7 @@ export default function CheckOutScreen(props) {
           <TouchableOpacity
             style={styles.btnBuy}
             activeOpacity={0.6}
-            onPress={() => navigation.navigate("CheckOut", { total })}>
+            onPress={() => navigation.navigate("FinishOrder")}>
             <LinearGradient
               colors={["#edd078", "#edbd2d"]}
               style={styles.btnBuy}>
