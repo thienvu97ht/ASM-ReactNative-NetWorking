@@ -9,7 +9,7 @@ export default function DialogComponent(props) {
 
   const onSubmit = () => {
     const formData = {
-      data: inputValue,
+      payload: inputValue,
       action: data.action,
     };
     onSubmitDialog(formData);
@@ -21,6 +21,7 @@ export default function DialogComponent(props) {
         <Dialog.Title>{data.title}</Dialog.Title>
         <Dialog.Input
           value={inputValue}
+          keyboardType={data.action === "phone" ? "number-pad" : "default"}
           onChangeText={(val) => setInputValue(val)}
         />
         <Dialog.Button label="Xác nhận" onPress={onSubmit} />

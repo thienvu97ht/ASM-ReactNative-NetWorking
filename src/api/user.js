@@ -5,6 +5,11 @@ const userApi = {
     const url = `user/getUserProfile.php`;
     return axiosClient.get(url);
   },
+
+  updateUserPhone: (data) => {
+    const url = `user/updateUserPhone.php`;
+    return axiosClient.post(url, data);
+  },
 };
 
 export default userApi;

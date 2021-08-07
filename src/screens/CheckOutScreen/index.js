@@ -11,7 +11,9 @@ import {
 } from "react-native";
 import { Avatar, Caption, Title } from "react-native-paper";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import userApi from "../../api/user";
+import { updatePhone } from "../../app/userSlice";
 import DialogComponent from "../../components/Dialog";
 import COLORS from "../../consts/colors";
 import { formatPrice } from "../../utils/Number";
@@ -29,6 +31,8 @@ export default function CheckOutScreen(props) {
   const user = userState.user;
   // console.log(total);
 
+  const dispatch = useDispatch();
+
   const openDialogPhone = () => {
     // Mở dialog
     setVisible(true);
@@ -42,13 +46,32 @@ export default function CheckOutScreen(props) {
     setData(newData);
   };
 
-  const onSubmitDialog = (val) => {
+  const onSubmitDialog = (data) => {
     setVisible(false);
-    console.log(val);
+    // console.log(data);
 
-    // Xác nhận action => dispatch action len reducer
+    // Xác nhận action => dispatch action len reducer => Gửi data lên sever
 
-    // Gửi data lên sever
+    // if (data.action === "phone") {
+    //   const action = updatePhone(data.payload);
+    //   dispatch(action);
+    // }
+
+    switch (data.action) {
+      case "phone":
+        const action = updatePhone(data.payload);
+        dispatch(action);
+
+        // Gửi data lên sever
+        const updateUserPhone = async () => {
+          await userApi.updateUserPhone({ phone: data.payload });
+        };
+        updateUserPhone();
+        break;
+      case "address":
+        console.log("address ne");
+        break;
+    }
   };
 
   return (
