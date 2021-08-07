@@ -1,31 +1,35 @@
-import React from "react";
-import { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
-import COLORS from "../../consts/colors";
+import React, { useState } from "react";
+import { Button, StyleSheet, View } from "react-native";
+import Dialog from "react-native-dialog";
 
 export default function SettingsScreen() {
-  const [isLike, setIsLike] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-  const toggleLike = () => {
-    setIsLike((x) => !x);
+  const showDialog = () => {
+    setVisible(true);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
+  const handleDelete = () => {
+    // The user has pressed the "Delete" button, so here you can do your own logic.
+    // ...Your logic
+    setVisible(false);
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        activeOpacity={0.6}
-        onPress={toggleLike}
-        style={[
-          styles.likeButton,
-          {
-            backgroundColor: isLike
-              ? "rgba(245, 42, 42,0.2)"
-              : "rgba(0,0,0,0.2) ",
-          },
-        ]}>
-        <Icon name="heart" size={18} color={isLike ? "#F52A2A" : "#000"} />
-      </TouchableOpacity>
+      <Button title="Show dialog" onPress={showDialog} />
+      <Dialog.Container visible={visible}>
+        <Dialog.Title>Account delete</Dialog.Title>
+        <Dialog.Description>
+          Do you want to delete this account? You cannot undo this action.
+        </Dialog.Description>
+        <Dialog.Button label="Cancel" onPress={handleCancel} />
+        <Dialog.Button label="Delete" onPress={handleDelete} />
+      </Dialog.Container>
     </View>
   );
 }
@@ -33,15 +37,8 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-
-  likeButton: {
-    width: 30,
-    height: 30,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });

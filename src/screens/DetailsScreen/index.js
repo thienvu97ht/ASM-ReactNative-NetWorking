@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import cartApi from "../../api/carts";
@@ -53,7 +60,9 @@ const DetailsScreen = (props) => {
 
     if (index === -1) {
       // Nếu sản phẩm chưa tồn tại trong giỏ hàng
-      window.alert("Thêm sản phẩm vào giỏ hàng thành công!");
+      Alert.alert("Thông báo", "Thêm sản phẩm vào giỏ hàng thành công!", [
+        { text: "Okay" },
+      ]);
       const action = addProductInCart(payload);
       dispatch(action);
 
@@ -63,7 +72,9 @@ const DetailsScreen = (props) => {
       };
       addProduct(data);
     } else {
-      window.alert("Thêm sản phẩm vào giỏ hàng thành công!");
+      Alert.alert("Thông báo", "Thêm sản phẩm vào giỏ hàng thành công!", [
+        { text: "Okay" },
+      ]);
       const action = updateProductInCart(payload);
       dispatch(action);
 

@@ -1,4 +1,6 @@
-import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -8,20 +10,46 @@ import {
   View,
 } from "react-native";
 import { Avatar, Caption, Title } from "react-native-paper";
-import { useSelector } from "react-redux";
-import COLORS from "../../consts/colors";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
+import { useSelector } from "react-redux";
+import DialogComponent from "../../components/Dialog";
+import COLORS from "../../consts/colors";
 import { formatPrice } from "../../utils/Number";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
 
 export default function CheckOutScreen(props) {
   const { total } = props.route.params;
   const navigation = useNavigation();
+  const [visible, setVisible] = useState(false);
+  const [data, setData] = useState({
+    title: "",
+    content: "",
+  });
 
   const userState = useSelector((state) => state.user);
   const user = userState.user;
   // console.log(total);
+
+  const openDialogPhone = () => {
+    // Mở dialog
+    setVisible(true);
+    const newData = {
+      title: "Thay đổi điện thoại",
+      content: user.phone,
+      action: "phone",
+    };
+
+    // Set lại data
+    setData(newData);
+  };
+
+  const onSubmitDialog = (val) => {
+    setVisible(false);
+    console.log(val);
+
+    // Xác nhận action => dispatch action len reducer
+
+    // Gửi data lên sever
+  };
 
   return (
     <SafeAreaView
@@ -32,6 +60,12 @@ export default function CheckOutScreen(props) {
       <ScrollView
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}>
+        <DialogComponent
+          visible={visible}
+          onSubmitDialog={onSubmitDialog}
+          data={data}
+        />
+
         <View style={styles.userInfoSection}>
           <Text style={styles.textProfile}>Người nhận</Text>
           <View style={{ flexDirection: "row", marginTop: 15 }}>
@@ -41,7 +75,7 @@ export default function CheckOutScreen(props) {
               }}
               size={70}
             />
-            <View style={{ marginLeft: 20 }}>
+            <View style={{ marginLeft: 20, flex: 1 }}>
               <Title
                 style={[
                   styles.title,
@@ -52,7 +86,16 @@ export default function CheckOutScreen(props) {
                 ]}>
                 {user.fullname}
               </Title>
-              <Caption style={styles.caption}>{user.phone}</Caption>
+              <View style={styles.phoneBox}>
+                <Caption style={styles.caption}>
+                  {user.phone === ""
+                    ? "Vui lòng nhập thêm số điện thoại"
+                    : user.phone}
+                </Caption>
+                <TouchableOpacity activeOpacity={0.6} onPress={openDialogPhone}>
+                  <Text style={styles.textButton}>Thay đổi</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
@@ -165,10 +208,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
+  phoneBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
   caption: {
-    fontSize: 15,
-    lineHeight: 15,
+    fontSize: 16,
+    lineHeight: 16,
     fontWeight: "500",
+    marginTop: 5,
   },
 
   userProfile: {
