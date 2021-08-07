@@ -1,29 +1,31 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { unwrapResult } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
   RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import userApi from "../../api/user";
 import {
   Avatar,
-  Title,
   Caption,
   Text,
+  Title,
   TouchableRipple,
 } from "react-native-paper";
-
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+import { useDispatch } from "react-redux";
+import { fetchUserData } from "../../app/userSlice";
 import COLORS from "../../consts/colors";
 
 export default function UserScreen(props) {
   const { navigation } = props;
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getToken = async () => {
@@ -41,7 +43,9 @@ export default function UserScreen(props) {
 
   const fetchData = async () => {
     setIsLoading(true);
-    const user = await userApi.getUser();
+    const action = fetchUserData();
+    const resultAction = await dispatch(action);
+    const user = unwrapResult(resultAction);
     setIsLoading(false);
     setUser(user);
   };
@@ -68,14 +72,14 @@ export default function UserScreen(props) {
               source={{
                 uri: user.avatar,
               }}
-              size={80}
+              size={70}
             />
             <View style={{ marginLeft: 20 }}>
               <Title
                 style={[
                   styles.title,
                   {
-                    marginTop: 15,
+                    marginTop: 8,
                     marginBottom: 5,
                   },
                 ]}>
@@ -110,7 +114,7 @@ export default function UserScreen(props) {
         <View style={styles.menuWrapper}>
           <TouchableRipple onPress={() => navigation.navigate("Favorites")}>
             <View style={styles.menuItem}>
-              <Icon name="heart-outline" color="#ff6666" size={25} />
+              <Icon name="heart-outline" color={COLORS.icon} size={25} />
               <Text style={styles.menuItemText}>Sản phẩm yêu thích</Text>
             </View>
           </TouchableRipple>
@@ -118,7 +122,7 @@ export default function UserScreen(props) {
             <View style={styles.menuItem}>
               <Icon
                 name="text-box-multiple-outline"
-                color="#ff6666"
+                color={COLORS.icon}
                 size={25}
               />
               <Text style={styles.menuItemText}>Đơn hàng</Text>
@@ -126,21 +130,29 @@ export default function UserScreen(props) {
           </TouchableRipple>
           <TouchableRipple onPress={() => {}}>
             <View style={styles.menuItem}>
-              <SimpleLineIcons name="location-pin" color="#ff6666" size={25} />
+              <SimpleLineIcons
+                name="location-pin"
+                color={COLORS.icon}
+                size={25}
+              />
               <Text style={styles.menuItemText}>Địa chỉ</Text>
             </View>
           </TouchableRipple>
 
           <TouchableRipple onPress={() => {}}>
             <View style={styles.menuItem}>
-              <Icon name="account-check-outline" color="#ff6666" size={25} />
+              <Icon
+                name="account-check-outline"
+                color={COLORS.icon}
+                size={25}
+              />
               <Text style={styles.menuItemText}>Hỗ trợ</Text>
             </View>
           </TouchableRipple>
 
           <TouchableRipple onPress={handleLogOut}>
             <View style={styles.menuItem}>
-              <Icon name="logout" color="#ff6666" size={25} />
+              <Icon name="logout" color={COLORS.icon} size={25} />
               <Text style={styles.menuItemText}>Đăng xuất</Text>
             </View>
           </TouchableRipple>
@@ -157,18 +169,18 @@ const styles = StyleSheet.create({
   },
 
   userInfoSection: {
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     marginBottom: 25,
   },
 
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
   },
 
   caption: {
-    fontSize: 14,
-    lineHeight: 14,
+    fontSize: 15,
+    lineHeight: 15,
     fontWeight: "500",
   },
 
@@ -199,7 +211,7 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: "row",
     paddingVertical: 15,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
   },
 
   menuItemText: {

@@ -1,12 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { unwrapResult } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native-animatable";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../app/cartSilce";
+import { fetchUserData } from "../../app/userSlice";
 import CartScreen from "../CartSceen";
 import CheckOutScreen from "../CheckOutScreen";
 import DetailsScreen from "../DetailsScreen";
@@ -28,8 +28,10 @@ function MainScreen() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const action = fetchProducts();
-      await dispatch(action);
+      const actionProduct = fetchProducts();
+      const actionUser = fetchUserData();
+      await dispatch(actionProduct);
+      await dispatch(actionUser);
     };
     fetchData();
   }, []);

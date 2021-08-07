@@ -4,12 +4,12 @@ import React, { useState } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Feather";
-import { useSelector } from "react-redux";
 import COLORS from "../consts/colors";
 import { formatPrice } from "../utils/Number";
 
 export default function CartItem(props) {
   const { products, deleteProduct, subTotal, discount } = props;
+  const total = subTotal - discount;
   const navigation = useNavigation();
 
   const [disabled, setDisabled] = useState(true);
@@ -25,8 +25,6 @@ export default function CartItem(props) {
   const getIdProduct = (id) => {
     deleteProduct(id);
   };
-
-  const checkOut = () => {};
 
   return (
     <View>
@@ -129,16 +127,14 @@ export default function CartItem(props) {
 
         <View style={styles.calculatedBox}>
           <Text style={styles.textCheckOut}>Tổng cộng</Text>
-          <Text style={styles.textCheckOut}>
-            {formatPrice(subTotal - discount)} VNĐ
-          </Text>
+          <Text style={styles.textCheckOut}>{formatPrice(total)} VNĐ</Text>
         </View>
       </View>
 
       <TouchableOpacity
         style={styles.btnBuy}
         activeOpacity={0.6}
-        onPress={() => navigation.navigate("CheckOut")}>
+        onPress={() => navigation.navigate("CheckOut", { total })}>
         <LinearGradient colors={["#edd078", "#edbd2d"]} style={styles.btnBuy}>
           <Text
             style={[
