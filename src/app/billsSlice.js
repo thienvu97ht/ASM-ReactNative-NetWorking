@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import billsApi from "../api/bills";
 
 export const fetchBills = createAsyncThunk("cart/fetchBills", async () => {
-  //   const data = await cartApi.getAllBills();
+  const data = await billsApi.getAllBills();
 
   // Return data
   return data;
@@ -16,6 +17,8 @@ const billsSilce = createSlice({
   extraReducers: {
     [fetchBills.fulfilled]: (state, action) => {
       //   state.productInbills = action.payload;
+
+      console.log(action.payload);
     },
   },
 });

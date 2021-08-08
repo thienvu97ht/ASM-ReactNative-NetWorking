@@ -11,6 +11,7 @@ import DetailsScreen from "../DetailsScreen";
 import FavoritesScreen from "../FavoritesScreen";
 import finishOrderScreen from "../FinishOrderScreen";
 import HomeScreen from "../HomeScreen";
+import InvoiceScreen from "../InvoiceScreen";
 import SettingsScreen from "../SettingsScreen";
 import UserScreen from "../UserScreen";
 
@@ -246,11 +247,26 @@ export function UserStackScreen() {
           ),
         }}
       />
-      <HomeStack.Screen
+      <UserStack.Screen
         name="Favorites"
         component={FavoritesScreen}
         options={{
           title: "Sản phẩm yêu thích",
+          headerStyle: {
+            backgroundColor: "#f1d276",
+          },
+          headerTintColor: "#000",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerTitleAlign: "center",
+        }}
+      />
+      <UserStack.Screen
+        name="Invoice"
+        component={InvoiceScreen}
+        options={{
+          title: "Đơn hàng đã mua",
           headerStyle: {
             backgroundColor: "#f1d276",
           },

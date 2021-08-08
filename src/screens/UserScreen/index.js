@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { unwrapResult } from "@reduxjs/toolkit";
-import React, { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
   RefreshControl,
   SafeAreaView,
@@ -21,26 +21,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData } from "../../app/userSlice";
 import COLORS from "../../consts/colors";
 
-export default function UserScreen(props) {
-  const { navigation } = props;
-  // const [user, setUser] = useState({});
+export default function UserScreen() {
+  const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const userState = useSelector((state) => state.user);
   const user = userState.user;
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
   const fetchData = async () => {
     setIsLoading(true);
     const action = fetchUserData();
-    const resultAction = await dispatch(action);
-    // const user = unwrapResult(resultAction);
+    dispatch(action);
     setIsLoading(false);
-    // setUser(user);
   };
 
   const handleLogOut = async () => {
@@ -111,7 +104,8 @@ export default function UserScreen(props) {
               <Text style={styles.menuItemText}>Sản phẩm yêu thích</Text>
             </View>
           </TouchableRipple>
-          <TouchableRipple onPress={() => {}}>
+
+          <TouchableRipple onPress={() => navigation.navigate("Invoice")}>
             <View style={styles.menuItem}>
               <Icon
                 name="text-box-multiple-outline"
@@ -121,6 +115,7 @@ export default function UserScreen(props) {
               <Text style={styles.menuItemText}>Đơn hàng</Text>
             </View>
           </TouchableRipple>
+
           <TouchableRipple onPress={() => {}}>
             <View style={styles.menuItem}>
               <SimpleLineIcons

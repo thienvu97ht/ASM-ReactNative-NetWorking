@@ -7,7 +7,7 @@ import { fetchUserData } from "../../app/userSlice";
 import ProductItem from "../../components/ProductItem";
 import COLORS from "../../consts/colors";
 
-export default function HomeScreen(props) {
+export default function HomeScreen() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();

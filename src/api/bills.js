@@ -2,7 +2,7 @@ import axiosClient from "./axiosClient";
 
 const billsApi = {
   getAllBills: () => {
-    const url = `bills/.php`;
+    const url = `bills/getBills.php`;
     return axiosClient.get(url);
   },
 
