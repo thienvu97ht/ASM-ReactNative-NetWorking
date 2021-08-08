@@ -10,6 +10,11 @@ const userApi = {
     const url = `user/updateUserPhone.php`;
     return axiosClient.post(url, data);
   },
+
+  updateUserAddress: (data) => {
+    const url = `user/updateUserAddress.php`;
+    return axiosClient.post(url, data);
+  },
 };
 
 export default userApi;

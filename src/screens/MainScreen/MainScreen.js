@@ -77,6 +77,8 @@ function MainScreen() {
         component={HomeStackScreen}
         options={{
           title: "Trang Chủ",
+          tabBarLabel: "Home",
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
@@ -85,6 +87,8 @@ function MainScreen() {
         options={{
           tabBarBadge: total,
           title: "Giỏ hàng",
+          tabBarLabel: "Cart",
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
@@ -92,6 +96,8 @@ function MainScreen() {
         component={UserStackScreen}
         options={{
           title: "Người dùng",
+          tabBarLabel: "User",
+          unmountOnBlur: true,
         }}
       />
 
@@ -100,6 +106,8 @@ function MainScreen() {
         component={SettingsStackScreen}
         options={{
           title: "Cài đặt",
+          tabBarLabel: "Settings",
+          unmountOnBlur: true,
         }}
       />
     </Tab.Navigator>

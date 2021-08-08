@@ -69,7 +69,7 @@ const SignInScreen = ({ navigation }) => {
         if (access_token) {
           await AsyncStorage.setItem("access_token", access_token);
           // chuyển trang
-          navigation.navigate("Main");
+          navigation.navigate("Home");
         } else {
           // alert("Tài khoản hoặc mật khẩu không chính xác");
         }

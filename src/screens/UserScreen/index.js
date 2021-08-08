@@ -17,37 +17,30 @@ import {
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData } from "../../app/userSlice";
 import COLORS from "../../consts/colors";
 
 export default function UserScreen(props) {
   const { navigation } = props;
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
+  const userState = useSelector((state) => state.user);
+  const user = userState.user;
+
   useEffect(() => {
-    const getToken = async () => {
-      try {
-        const access_token = await AsyncStorage.getItem("access_token");
-        if (access_token) {
-          fetchData();
-        }
-      } catch (e) {
-        // error reading value
-      }
-    };
-    getToken();
+    fetchData();
   }, []);
 
   const fetchData = async () => {
     setIsLoading(true);
     const action = fetchUserData();
     const resultAction = await dispatch(action);
-    const user = unwrapResult(resultAction);
+    // const user = unwrapResult(resultAction);
     setIsLoading(false);
-    setUser(user);
+    // setUser(user);
   };
 
   const handleLogOut = async () => {

@@ -13,7 +13,7 @@ import { Avatar, Caption, Title } from "react-native-paper";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { useDispatch, useSelector } from "react-redux";
 import userApi from "../../api/user";
-import { updatePhone } from "../../app/userSlice";
+import { updateAddress, updatePhone } from "../../app/userSlice";
 import DialogComponent from "../../components/Dialog";
 import COLORS from "../../consts/colors";
 import { formatPrice } from "../../utils/Number";
@@ -25,11 +25,11 @@ export default function CheckOutScreen(props) {
   const [data, setData] = useState({
     title: "",
     content: "",
+    action: "",
   });
 
   const userState = useSelector((state) => state.user);
   const user = userState.user;
-  // console.log(total);
 
   const dispatch = useDispatch();
 
@@ -46,21 +46,28 @@ export default function CheckOutScreen(props) {
     setData(newData);
   };
 
+  const openDialogAddress = () => {
+    // Mở dialog
+    setVisible(true);
+    const newData = {
+      title: "Thay đổi địa chỉ",
+      content: user.address,
+      action: "address",
+    };
+
+    // Set lại data
+    setData(newData);
+  };
+
   const onSubmitDialog = (data) => {
     setVisible(false);
-    // console.log(data);
 
     // Xác nhận action => dispatch action len reducer => Gửi data lên sever
 
-    // if (data.action === "phone") {
-    //   const action = updatePhone(data.payload);
-    //   dispatch(action);
-    // }
-
     switch (data.action) {
       case "phone":
-        const action = updatePhone(data.payload);
-        dispatch(action);
+        const actionPhone = updatePhone(data.payload);
+        dispatch(actionPhone);
 
         // Gửi data lên sever
         const updateUserPhone = async () => {
@@ -68,10 +75,28 @@ export default function CheckOutScreen(props) {
         };
         updateUserPhone();
         break;
+
       case "address":
-        console.log("address ne");
+        const actionAddress = updateAddress(data.payload);
+        dispatch(actionAddress);
+
+        // Gửi data lên sever
+        const updateUserAddress = async () => {
+          await userApi.updateUserAddress({ address: data.payload });
+        };
+        updateUserAddress();
         break;
     }
+  };
+
+  const finishOrder = () => {
+    navigation.navigate("FinishOrder");
+
+    // Xóa hết productInCart ở store và sever
+
+    // Add bill vào sever
+
+    // Gửi email cho người dùng
   };
 
   return (
@@ -111,9 +136,7 @@ export default function CheckOutScreen(props) {
               </Title>
               <View style={styles.phoneBox}>
                 <Caption style={styles.caption}>
-                  {user.phone === ""
-                    ? "Vui lòng nhập thêm số điện thoại"
-                    : user.phone}
+                  {user.phone === "" ? "Vui lòng nhập SĐT" : user.phone}
                 </Caption>
                 <TouchableOpacity activeOpacity={0.6} onPress={openDialogPhone}>
                   <Text style={styles.textButton}>Thay đổi</Text>
@@ -133,7 +156,7 @@ export default function CheckOutScreen(props) {
           <View style={styles.profileBox}>
             <View style={styles.titleBox}>
               <Text style={styles.textProfile}>Địa chỉ giao hàng</Text>
-              <TouchableOpacity activeOpacity={0.6} onPress={() => {}}>
+              <TouchableOpacity activeOpacity={0.6} onPress={openDialogAddress}>
                 <Text style={styles.textButton}>Thay đổi</Text>
               </TouchableOpacity>
             </View>
@@ -185,7 +208,7 @@ export default function CheckOutScreen(props) {
           <TouchableOpacity
             style={styles.btnBuy}
             activeOpacity={0.6}
-            onPress={() => navigation.navigate("FinishOrder")}>
+            onPress={finishOrder}>
             <LinearGradient
               colors={["#edd078", "#edbd2d"]}
               style={styles.btnBuy}>

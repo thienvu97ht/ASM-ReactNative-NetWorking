@@ -20,6 +20,10 @@ const userSilce = createSlice({
     updatePhone(state, action) {
       state.user.phone = action.payload;
     },
+
+    updateAddress(state, action) {
+      state.user.address = action.payload;
+    },
   },
   extraReducers: {
     [fetchUserData.fulfilled]: (state, action) => {
@@ -29,5 +33,5 @@ const userSilce = createSlice({
 });
 
 const { actions, reducer } = userSilce;
-export const { updatePhone } = actions;
+export const { updatePhone, updateAddress } = actions;
 export default reducer;

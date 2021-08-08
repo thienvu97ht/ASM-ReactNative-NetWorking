@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Dialog from "react-native-dialog";
@@ -6,6 +6,10 @@ import Dialog from "react-native-dialog";
 export default function DialogComponent(props) {
   const { onSubmitDialog, visible, data } = props;
   const [inputValue, setInputValue] = useState(data.content);
+
+  useEffect(() => {
+    setInputValue(data.content);
+  }, [data.content]);
 
   const onSubmit = () => {
     const formData = {

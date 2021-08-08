@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
+import { useEffect } from "react";
 import {
   Image,
   SafeAreaView,
@@ -12,8 +13,15 @@ import {
 import Bee from "../../assets/bee.gif";
 import COLORS from "../../consts/colors";
 
-export default function finishOrderScreen() {
+export default function finishOrderScreen(props) {
   const navigation = useNavigation();
+
+  // Kiểm tra sản phẩm trong giỏ hàng
+  // Nếu không có sản phẩm => CartScreen
+
+  const goHome = () => {
+    navigation.navigate("Home");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -32,7 +40,7 @@ export default function finishOrderScreen() {
         <TouchableOpacity
           style={styles.btnBuy}
           activeOpacity={0.6}
-          onPress={() => navigation.navigate("Home")}>
+          onPress={goHome}>
           <LinearGradient colors={["#edd078", "#edbd2d"]} style={styles.btnBuy}>
             <Text
               style={[
