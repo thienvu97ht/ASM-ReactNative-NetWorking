@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { useDispatch } from "react-redux";
 import productApi from "../../api/products";
+import { fetchUserData } from "../../app/userSlice";
 import ProductItem from "../../components/ProductItem";
 import COLORS from "../../consts/colors";
 
 export default function HomeScreen(props) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchData();
@@ -17,6 +20,9 @@ export default function HomeScreen(props) {
     const productList = await productApi.getAllProductsByUsername();
     setIsLoading(false);
     setProducts(productList);
+
+    const actionUser = fetchUserData();
+    await dispatch(actionUser);
   };
 
   const setIsLike = (id) => {

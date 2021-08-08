@@ -20,6 +20,11 @@ const cartApi = {
     const url = `carts/updateProductInCart.php`;
     return axiosClient.post(url, data);
   },
+
+  deleteAllProductInCart: () => {
+    const url = `carts/deleteAllProductInCart.php`;
+    return axiosClient.post(url);
+  },
 };
 
 export default cartApi;

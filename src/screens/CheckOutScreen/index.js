@@ -12,7 +12,10 @@ import {
 import { Avatar, Caption, Title } from "react-native-paper";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { useDispatch, useSelector } from "react-redux";
+import billsApi from "../../api/bills";
+import cartApi from "../../api/carts";
 import userApi from "../../api/user";
+import { deleteAllProductInCartStore } from "../../app/cartSilce";
 import { updateAddress, updatePhone } from "../../app/userSlice";
 import DialogComponent from "../../components/Dialog";
 import COLORS from "../../consts/colors";
@@ -29,7 +32,9 @@ export default function CheckOutScreen(props) {
   });
 
   const userState = useSelector((state) => state.user);
+  const cartsState = useSelector((state) => state.carts);
   const user = userState.user;
+  const productInCart = cartsState.productInCart;
 
   const dispatch = useDispatch();
 
@@ -91,10 +96,23 @@ export default function CheckOutScreen(props) {
 
   const finishOrder = () => {
     navigation.navigate("FinishOrder");
-
-    // Xóa hết productInCart ở store và sever
+    // console.log(productInCart);
 
     // Add bill vào sever
+    const addBills = async () => {
+      await billsApi.addBills(productInCart);
+    };
+    addBills();
+
+    // Xóa hết productInCart ở store
+    const actionDeleteAll = deleteAllProductInCartStore();
+    dispatch(actionDeleteAll);
+
+    // Xóa hết productInCart ở sever
+    const deleteAll = async () => {
+      await cartApi.deleteAllProductInCart();
+    };
+    deleteAll();
 
     // Gửi email cho người dùng
   };
