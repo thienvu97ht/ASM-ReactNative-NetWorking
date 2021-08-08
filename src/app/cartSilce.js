@@ -1,13 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import cartApi from "../api/carts";
 
-export const fetchProducts = createAsyncThunk(
+export const fetchProductsInCart = createAsyncThunk(
   "cart/fetchProducts",
   async () => {
     const data = await cartApi.getAllProductsInCart();
 
     // Return data
     return data;
+  }
+);
+
+export const deleteProductsInCart = createAsyncThunk(
+  "cart/deleteProductsInCart",
+  async () => {
+    await cartApi.deleteAllProductInCart();
   }
 );
 
@@ -35,14 +42,14 @@ const cartSilce = createSlice({
       state.productInCart[index].quantity =
         Number(state.productInCart[index].quantity) + Number(quantity);
     },
-
-    deleteAllProductInCartStore(state, action) {
-      state.productInCart = [];
-    },
   },
   extraReducers: {
-    [fetchProducts.fulfilled]: (state, action) => {
+    [fetchProductsInCart.fulfilled]: (state, action) => {
       state.productInCart = action.payload;
+    },
+
+    [deleteProductsInCart.fulfilled]: (state, action) => {
+      state.productInCart = [];
     },
   },
 });

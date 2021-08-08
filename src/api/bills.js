@@ -10,6 +10,11 @@ const billsApi = {
     const url = `bills/addBills.php`;
     return axiosClient.post(url, data);
   },
+
+  sendBill: (data) => {
+    const url = `bills/sendBill.php`;
+    return axiosClient.post(url, data);
+  },
 };
 
 export default billsApi;

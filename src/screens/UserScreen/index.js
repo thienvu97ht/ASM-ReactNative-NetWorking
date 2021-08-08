@@ -30,9 +30,9 @@ export default function UserScreen(props) {
   const userState = useSelector((state) => state.user);
   const user = userState.user;
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const fetchData = async () => {
     setIsLoading(true);

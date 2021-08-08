@@ -13,9 +13,8 @@ import { Avatar, Caption, Title } from "react-native-paper";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { useDispatch, useSelector } from "react-redux";
 import billsApi from "../../api/bills";
-import cartApi from "../../api/carts";
 import userApi from "../../api/user";
-import { deleteAllProductInCartStore } from "../../app/cartSilce";
+import { deleteProductsInCart } from "../../app/cartSilce";
 import { updateAddress, updatePhone } from "../../app/userSlice";
 import DialogComponent from "../../components/Dialog";
 import COLORS from "../../consts/colors";
@@ -96,25 +95,32 @@ export default function CheckOutScreen(props) {
 
   const finishOrder = () => {
     navigation.navigate("FinishOrder");
-    // console.log(productInCart);
 
     // Add bill vào sever
     const addBills = async () => {
-      await billsApi.addBills(productInCart);
+      const resp = await billsApi.addBills(productInCart);
+
+      const emailData = {
+        products: productInCart,
+        email: user.email,
+        fullname: user.fullname,
+        phone: user.phone,
+        address: user.address,
+        id_bill: resp.id_bill,
+        total,
+      };
+
+      // Gửi email cho người dùng
+      const sendEmail = async () => {
+        await billsApi.sendBill(emailData);
+      };
+      sendEmail();
     };
     addBills();
 
-    // Xóa hết productInCart ở store
-    const actionDeleteAll = deleteAllProductInCartStore();
+    // Xóa hết productInCart ở store và sever
+    const actionDeleteAll = deleteProductsInCart();
     dispatch(actionDeleteAll);
-
-    // Xóa hết productInCart ở sever
-    const deleteAll = async () => {
-      await cartApi.deleteAllProductInCart();
-    };
-    deleteAll();
-
-    // Gửi email cho người dùng
   };
 
   return (

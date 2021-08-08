@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import productApi from "../../api/products";
+import { fetchProductsInCart } from "../../app/cartSilce";
 import { fetchUserData } from "../../app/userSlice";
 import ProductItem from "../../components/ProductItem";
 import COLORS from "../../consts/colors";
@@ -21,8 +22,13 @@ export default function HomeScreen(props) {
     setIsLoading(false);
     setProducts(productList);
 
+    // Tải user data
     const actionUser = fetchUserData();
     await dispatch(actionUser);
+
+    // Tải product in cart
+    const actionProductInCart = fetchProductsInCart();
+    await dispatch(actionProductInCart);
   };
 
   const setIsLike = (id) => {

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import cartApi from "../../api/carts";
-import { deleteProductInCart, fetchProducts } from "../../app/cartSilce";
+import { deleteProductInCart, fetchProductsInCart } from "../../app/cartSilce";
 import EmpryCart from "../../assets/empty_cart.png";
 import CartItem from "../../components/cartItem";
 import COLORS from "../../consts/colors";
@@ -23,9 +23,9 @@ export default function CartScreen() {
   const cartState = useSelector((state) => state.carts);
   const products = cartState.productInCart;
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   let totalPrice = 0;
   products.forEach((product) => {
@@ -34,7 +34,7 @@ export default function CartScreen() {
 
   const fetchData = async () => {
     setIsLoading(true);
-    const action = fetchProducts();
+    const action = fetchProductsInCart();
     await dispatch(action);
     setIsLoading(false);
   };

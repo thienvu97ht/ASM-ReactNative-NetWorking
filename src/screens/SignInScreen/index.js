@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import {
@@ -12,10 +14,10 @@ import {
 import * as Animatable from "react-native-animatable";
 import Feather from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import authenApi from "../../api/authen";
 
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = () => {
+  const navigation = useNavigation();
   const [data, setData] = useState({
     username: "",
     password: "",

@@ -1,6 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import {
+  Alert,
   Platform,
   StatusBar,
   StyleSheet,
@@ -70,7 +71,7 @@ const NewPasswordScreen = ({ navigation }) => {
 
   const handleLoginFormSubmit = () => {
     const { otp, password, confirm_password } = data;
-    if (password === confirm_password) {
+    if (password === confirm_password && password.trim().length !== 0) {
       const formData = {
         otp,
         password,
@@ -88,6 +89,10 @@ const NewPasswordScreen = ({ navigation }) => {
       };
 
       newPasswordApp();
+    } else {
+      Alert.alert("Thông báo", "Vui lòng nhập lại mật khẩu!", [
+        { text: "Okay" },
+      ]);
     }
   };
 

@@ -4,9 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native-animatable";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../app/cartSilce";
-import { fetchUserData } from "../../app/userSlice";
+import { useSelector } from "react-redux";
 import CartScreen from "../CartSceen";
 import CheckOutScreen from "../CheckOutScreen";
 import DetailsScreen from "../DetailsScreen";
@@ -24,18 +22,7 @@ const SettingsStack = createStackNavigator();
 
 function MainScreen() {
   const [total, setTotal] = useState();
-  const dispatch = useDispatch();
   const cartState = useSelector((state) => state.carts);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const actionProduct = fetchProducts();
-      const actionUser = fetchUserData();
-      await dispatch(actionProduct);
-      await dispatch(actionUser);
-    };
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const productInCart = cartState.productInCart;
