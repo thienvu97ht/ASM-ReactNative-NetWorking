@@ -121,12 +121,8 @@ export default function UserScreen() {
 
           <TouchableRipple onPress={() => {}}>
             <View style={styles.menuItem}>
-              <SimpleLineIcons
-                name="location-pin"
-                color={COLORS.icon}
-                size={25}
-              />
-              <Text style={styles.menuItemText}>Địa chỉ</Text>
+              <Icon name="key-change" color={COLORS.icon} size={25} />
+              <Text style={styles.menuItemText}>Đổi mật khẩu</Text>
             </View>
           </TouchableRipple>
 

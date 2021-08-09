@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useState } from "react";
@@ -11,7 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Image } from "react-native-animatable";
 import Animated from "react-native-reanimated";
 import Feather from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -47,7 +47,6 @@ const EditProfileScreen = () => {
     phone: user.phone,
     address: user.address,
     avatar: user.avatar,
-    email: user.email,
   });
 
   const updateProfileUser = async () => {
@@ -57,8 +56,26 @@ const EditProfileScreen = () => {
     Alert.alert("Thông báo", "Đổi thông tin thành công!", [{ text: "Okay" }]);
   };
 
-  const takePhotoFromCamera = () => {};
+  const takePhotoFromCamera = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
 
+    if (!result.cancelled) {
+      // Upload image len cloudinary
+      let newFile = {
+        uri: result.uri,
+        type: `test/${result.uri.split(".")[1]}`,
+        name: `test.${result.uri.split(".")[1]}`,
+      };
+      handleUpload(newFile);
+    }
+  };
+
+  // Upload avatar
   const choosePhotoFromLibrary = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -66,16 +83,35 @@ const EditProfileScreen = () => {
       aspect: [4, 4],
       quality: 1,
     });
-
-    console.log(result);
+    // console.log(result);
 
     if (!result.cancelled) {
-      const newProfile = {
-        ...inputUser,
-        avatar: result.uri,
+      // Upload image len cloudinary
+      let newFile = {
+        uri: result.uri,
+        type: `test/${result.uri.split(".")[1]}`,
+        name: `test.${result.uri.split(".")[1]}`,
       };
-      setInputUser(newProfile);
+      handleUpload(newFile);
     }
+  };
+
+  const handleUpload = (image) => {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "qmi1v5yo");
+    fetch("https://api.cloudinary.com/v1_1/dzhgirgfh/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const newProfile = {
+          ...inputUser,
+          avatar: data.secure_url,
+        };
+        setInputUser(newProfile);
+      });
   };
 
   const renderInner = () => (
@@ -170,13 +206,6 @@ const EditProfileScreen = () => {
                 </View>
               </ImageBackground>
             </View>
-
-            {/* {image && (
-              <Image
-                source={{ uri: image }}
-                style={{ width: 200, height: 200 }}
-              />
-            )} */}
           </TouchableOpacity>
           <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}>
             {user.fullname}
@@ -217,24 +246,6 @@ const EditProfileScreen = () => {
             ]}
             value={inputUser.phone}
             onChangeText={(val) => setInputUser({ ...inputUser, phone: val })}
-          />
-        </View>
-
-        <View style={styles.action}>
-          <FontAwesome name="envelope-o" color={COLORS.grey} size={20} />
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor="#666666"
-            keyboardType="email-address"
-            autoCorrect={false}
-            style={[
-              styles.textInput,
-              {
-                color: COLORS.grey,
-              },
-            ]}
-            value={inputUser.email}
-            onChangeText={(val) => setInputUser({ ...inputUser, email: val })}
           />
         </View>
 
