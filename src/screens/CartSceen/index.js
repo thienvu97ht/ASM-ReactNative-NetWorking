@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import cartApi from "../../api/carts";
 import { deleteProductInCart, fetchProductsInCart } from "../../app/cartSilce";
 import EmpryCart from "../../assets/empty_cart.png";
-import CartItem from "../../components/cartItem";
+import CartItem from "../../components/CartItem";
 import COLORS from "../../consts/colors";
 
 export default function CartScreen() {
