@@ -26,6 +26,9 @@ export default function UserScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
+  const avatarDefaul =
+    "https://i.ibb.co/BCX3q9q/57393124-364351517508038-8412224844044697600-n.png";
+
   const userState = useSelector((state) => state.user);
   const user = userState.user;
 
@@ -56,7 +59,7 @@ export default function UserScreen() {
           <View style={{ flexDirection: "row", marginTop: 15 }}>
             <Avatar.Image
               source={{
-                uri: user.avatar,
+                uri: user.avatar ? user.avatar : avatarDefaul,
               }}
               size={70}
             />

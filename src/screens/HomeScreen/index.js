@@ -48,7 +48,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, paddingHorizontal: 20, backgroundColor: COLORS.white }}>
+      style={{ flex: 1, paddingHorizontal: 20, backgroundColor: COLORS.light }}>
       <FlatList
         columnWrapperStyle={{ justifyContent: "space-between" }}
         showsVerticalScrollIndicator={false}

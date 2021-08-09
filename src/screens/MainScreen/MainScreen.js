@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native-animatable";
@@ -8,6 +9,7 @@ import { useSelector } from "react-redux";
 import CartScreen from "../CartSceen";
 import CheckOutScreen from "../CheckOutScreen";
 import DetailsScreen from "../DetailsScreen";
+import EditProfileScreen from "../EditProfileScreen";
 import FavoritesScreen from "../FavoritesScreen";
 import finishOrderScreen from "../FinishOrderScreen";
 import HomeScreen from "../HomeScreen";
@@ -215,6 +217,8 @@ export function CartStackScreen() {
 }
 
 export function UserStackScreen() {
+  const navigation = useNavigation();
+
   return (
     <UserStack.Navigator>
       <UserStack.Screen
@@ -245,6 +249,21 @@ export function UserStackScreen() {
               />
             </View>
           ),
+        }}
+      />
+      <UserStack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{
+          title: "Sửa thông tin",
+          headerStyle: {
+            backgroundColor: "#f1d276",
+          },
+          headerTintColor: "#000",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerTitleAlign: "center",
         }}
       />
       <UserStack.Screen

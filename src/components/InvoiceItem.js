@@ -54,8 +54,7 @@ export default function InvoiceItem(props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.white,
-    // height: 200,
+    backgroundColor: COLORS.light,
     borderRadius: 10,
     marginBottom: 20,
   },

@@ -11,6 +11,16 @@ export const fetchUserData = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  "cart/updateProfile",
+  async (newProfile) => {
+    const data = await userApi.updateProfile(newProfile);
+
+    // Return data
+    return data;
+  }
+);
+
 const userSilce = createSlice({
   name: "user",
   initialState: {
@@ -27,6 +37,10 @@ const userSilce = createSlice({
   },
   extraReducers: {
     [fetchUserData.fulfilled]: (state, action) => {
+      state.user = action.payload;
+    },
+
+    [updateProfile.fulfilled]: (state, action) => {
       state.user = action.payload;
     },
   },

@@ -102,7 +102,7 @@ export default function ProductItem(props) {
 const styles = StyleSheet.create({
   card: {
     height: 264,
-    backgroundColor: COLORS.light,
+    backgroundColor: COLORS.white,
     width,
     marginHorizontal: 2,
     borderRadius: 10,

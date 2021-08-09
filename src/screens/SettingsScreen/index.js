@@ -1,44 +1,57 @@
-import React, { useState } from "react";
-import { Button, StyleSheet, View } from "react-native";
-import Dialog from "react-native-dialog";
+import React, { useRef } from "react";
+import { Button, Text, View } from "react-native";
+import BottomSheet from "reanimated-bottom-sheet";
 
-export default function SettingsScreen() {
-  const [visible, setVisible] = useState(false);
-
-  const showDialog = () => {
-    setVisible(true);
-  };
-
-  const handleCancel = () => {
-    setVisible(false);
-  };
-
-  const handleDelete = () => {
-    // The user has pressed the "Delete" button, so here you can do your own logic.
-    // ...Your logic
-    setVisible(false);
-  };
-
-  return (
-    <View style={styles.container}>
-      <Button title="Show dialog" onPress={showDialog} />
-      <Dialog.Container visible={visible}>
-        <Dialog.Title>Account delete</Dialog.Title>
-        <Dialog.Description>
-          Do you want to delete this account? You cannot undo this action.
-        </Dialog.Description>
-        <Dialog.Button label="Cancel" onPress={handleCancel} />
-        <Dialog.Button label="Delete" onPress={handleDelete} />
-      </Dialog.Container>
+const SettingsScreen = () => {
+  const renderContent = () => (
+    <View
+      style={{
+        backgroundColor: "white",
+        padding: 16,
+        height: 450,
+      }}>
+      <Text>Swipe down to close</Text>
+      <Button
+        title="Close Bottom Sheet"
+        onPress={() => sheetRef.current.snapTo(2)}
+      />
     </View>
   );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+  const sheetRef = React.useRef(null);
+
+  return (
+    <>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "papayawhip",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+        <Button
+          title="Open Bottom Sheet"
+          onPress={() => sheetRef.current.snapTo(0)}
+        />
+      </View>
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={[200, 300, 0]}
+        borderRadius={10}
+        renderContent={renderContent}
+        enabledContentTapInteraction={false}
+      />
+    </>
+  );
+};
+
+export default SettingsScreen;
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });

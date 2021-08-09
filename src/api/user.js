@@ -15,6 +15,11 @@ const userApi = {
     const url = `user/updateUserAddress.php`;
     return axiosClient.post(url, data);
   },
+
+  updateProfile: (data) => {
+    const url = `user/updateProfile.php`;
+    return axiosClient.post(url, data);
+  },
 };
 
 export default userApi;
