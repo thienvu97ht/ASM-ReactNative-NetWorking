@@ -1,6 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import {
+  Alert,
   Platform,
   StatusBar,
   StyleSheet,
@@ -108,7 +109,7 @@ const SignUpScreen = ({ navigation }) => {
   const handleSigUp = () => {
     const { username, fullname, email, password, confirm_password } = data;
 
-    if (password === confirm_password) {
+    if (password === confirm_password && password.trim().length > 0) {
       formSignUp = {
         username,
         fullname,
@@ -126,6 +127,10 @@ const SignUpScreen = ({ navigation }) => {
       };
 
       registerApp();
+    } else {
+      Alert.alert("Thông báo", "Mật khẩu không trùng khớp!", [
+        { text: "Okay" },
+      ]);
     }
   };
 

@@ -20,6 +20,11 @@ const authenApi = {
     const url = `auth/newPass.php`;
     return axiosClient.post(url, data);
   },
+
+  changePassword: (data) => {
+    const url = `auth/updatePassword.php`;
+    return axiosClient.post(url, data);
+  },
 };
 
 export default authenApi;

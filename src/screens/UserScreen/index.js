@@ -119,7 +119,7 @@ export default function UserScreen() {
             </View>
           </TouchableRipple>
 
-          <TouchableRipple onPress={() => {}}>
+          <TouchableRipple onPress={() => navigation.navigate("ChangePass")}>
             <View style={styles.menuItem}>
               <Icon name="key-change" color={COLORS.icon} size={25} />
               <Text style={styles.menuItemText}>Đổi mật khẩu</Text>
