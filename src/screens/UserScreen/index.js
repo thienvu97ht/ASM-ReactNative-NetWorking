@@ -126,7 +126,7 @@ export default function UserScreen() {
             </View>
           </TouchableRipple>
 
-          <TouchableRipple onPress={() => {}}>
+          <TouchableRipple onPress={() => navigation.navigate("Support")}>
             <View style={styles.menuItem}>
               <Icon
                 name="account-check-outline"

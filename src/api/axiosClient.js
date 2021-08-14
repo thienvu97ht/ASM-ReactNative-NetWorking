@@ -3,7 +3,7 @@ import queryString from "query-string";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const axiosClient = axios.create({
-  baseURL: "http://10.0.2.2:80/project/Asm-API/api/",
+  baseURL: "http://192.168.0.2:80/project/Asm-API/api/",
   headers: {
     "Content-Type": "application/json",
   },

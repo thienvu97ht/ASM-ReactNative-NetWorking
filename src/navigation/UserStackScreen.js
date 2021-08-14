@@ -7,6 +7,7 @@ import ChangePassScreen from "../screens/ChangePassScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
 import InvoiceScreen from "../screens/InvoiceScreen";
+import SupportScreen from "../screens/SupportScreen";
 import UserScreen from "../screens/UserScreen";
 
 const UserStack = createStackNavigator();
@@ -96,6 +97,21 @@ function UserStackScreen() {
         component={ChangePassScreen}
         options={{
           title: "Đổi mật khẩu",
+          headerStyle: {
+            backgroundColor: "#f1d276",
+          },
+          headerTintColor: "#000",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerTitleAlign: "center",
+        }}
+      />
+      <UserStack.Screen
+        name="Support"
+        component={SupportScreen}
+        options={{
+          title: "Chat với Admin",
           headerStyle: {
             backgroundColor: "#f1d276",
           },
